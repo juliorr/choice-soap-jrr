@@ -1,5 +1,8 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://spring.io/guides/gs-producing-web-service"
-  targetNamespace="http://spring.io/guides/gs-producing-web-service" elementFormDefault="qualified">
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:tns="http://localhost:8081"
+  targetNamespace="http://localhost:8081"
+  elementFormDefault="qualified">
 
   <xs:element name="getHotelRequest">
     <xs:complexType>
@@ -26,12 +29,4 @@
       <!-- TODO add the relatione with Amenities -->
     </xs:sequence>
   </xs:complexType>
-
-  <xs:simpleType name="currency">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="GBP"/>
-      <xs:enumeration value="EUR"/>
-      <xs:enumeration value="PLN"/>
-    </xs:restriction>
-  </xs:simpleType>
 </xs:schema>

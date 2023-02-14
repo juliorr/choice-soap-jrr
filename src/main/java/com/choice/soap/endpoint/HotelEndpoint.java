@@ -1,8 +1,8 @@
 package com.choice.soap.endpoint;
 
 import com.choice.soap.respository.HotelRepository;
-import io.spring.guides.gs_producing_web_service.GetHotelRequest;
-import io.spring.guides.gs_producing_web_service.GetHotelResponse;
+import localhost._8081.GetHotelRequest;
+import localhost._8081.GetHotelResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
@@ -12,7 +12,7 @@ import org.springframework.ws.server.endpoint.annotation.ResponsePayload;
 @Endpoint
 public class HotelEndpoint {
 
-  private static final String NAMESPACE_URI = "http://localhost:8081/";
+  private static final String NAMESPACE_URI = "http://localhost:8081";
 
   private HotelRepository hotelRepository;
 

@@ -1,9 +1,9 @@
 package com.choice.soap.respository;
 
-import io.spring.guides.gs_producing_web_service.Hotel;
 import java.util.HashMap;
 import java.util.Map;
 import javax.annotation.PostConstruct;
+import localhost._8081.Hotel;
 import org.springframework.stereotype.Component;
 
 @Component
