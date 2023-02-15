@@ -2,6 +2,8 @@ package com.choice.soap.endpoint;
 
 import com.choice.soap.model.Hotel;
 import com.choice.soap.respository.HotelRepository;
+import localhost._8081.CreateHotelRequest;
+import localhost._8081.CreateHotelResponse;
 import localhost._8081.GetHotelRequest;
 import localhost._8081.GetHotelResponse;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
@@ -25,6 +27,21 @@ public class HotelEndpoint {
   public GetHotelResponse getHotel(@RequestPayload GetHotelRequest request) {
     GetHotelResponse response = new GetHotelResponse();
     Hotel hotelEntity = hotelRepository.findByName(request.getName());
+    response.setHotel(hotelEntity.convertToDomain());
+
+    return response;
+  }
+
+  @PayloadRoot(namespace = NAMESPACE_URI, localPart = "createHotelRequest")
+  @ResponsePayload
+  public CreateHotelResponse addHotel(@RequestPayload CreateHotelRequest request) {
+    CreateHotelResponse response = new CreateHotelResponse();
+
+    Hotel hotelEntity = hotelRepository.save(new Hotel(
+        request.getName(),
+        request.getAddress(),
+        request.getRating()
+    ));
     response.setHotel(hotelEntity.convertToDomain());
 
     return response;

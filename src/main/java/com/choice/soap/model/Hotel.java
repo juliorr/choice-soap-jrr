@@ -10,7 +10,7 @@ import javax.persistence.Id;
 public class Hotel {
 
   @Id
-  @GeneratedValue(strategy = GenerationType.SEQUENCE)
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id", nullable = false)
   private Long id = 0L;
 
