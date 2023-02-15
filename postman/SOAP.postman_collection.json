@@ -81,8 +81,8 @@
 							"var error = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"SOAP-ENV:Fault\"];",
 							"",
 							"",
-							"pm.test(\"Status code is 404\", () => {",
-							"    pm.response.to.have.status(404);",
+							"pm.test(\"Status code is 500\", () => {",
+							"    pm.response.to.have.status(500);",
 							"});",
 							""
 						],
