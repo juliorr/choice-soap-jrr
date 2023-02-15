@@ -12,14 +12,15 @@ public class Hotel {
   @Id
   @GeneratedValue(strategy = GenerationType.SEQUENCE)
   @Column(name = "id", nullable = false)
-  private Long id;
+  private Long id = 0L;
 
-  private String name;
-  private String address;
-  private Integer rating;
+  private String name = "";
+  private String address = "";
+  private Integer rating = 0;
 
 
-  protected Hotel() {}
+  protected Hotel() {
+  }
 
   public Hotel(String name, String address, Integer rating) {
     this.name = name;
@@ -56,6 +57,7 @@ public class Hotel {
     hotelDomain.setAddress(this.getAddress());
     hotelDomain.setName(this.getName());
     hotelDomain.setRating(this.getRating());
+
     return hotelDomain;
   }
 }
