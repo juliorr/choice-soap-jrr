@@ -97,7 +97,7 @@
         <groupId>org.flywaydb</groupId>
         <artifactId>flyway-maven-plugin</artifactId>
         <configuration>
-          <url>jdbc:mysql://localhost:43306/choice?useSsl=true</url>
+          <url>${DB_URL}</url>
           <user>root</user>
           <password>password</password>
           <locations>classpath:db/migration</locations>
