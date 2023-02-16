@@ -6,6 +6,7 @@ import static org.mockito.Mockito.mock;
 
 import com.choice.soap.model.Hotel;
 import com.choice.soap.respository.HotelRepository;
+import java.util.Optional;
 import localhost._8081.CreateHotelRequest;
 import localhost._8081.CreateHotelResponse;
 import localhost._8081.GetHotelRequest;
@@ -27,15 +28,15 @@ class HotelEndpointTest {
   private UpdateHotelRequest updateHotelRequest;
   private CreateHotelResponse createHotelResponse;
   private CreateHotelRequest createHotelRequest;
-
   private Hotel hotelModel;
 
   @BeforeEach
   void setUp() {
     hotelRepository = mock(HotelRepository.class);
     hotelModel = new Hotel("some name", "some address", 1);
-    Mockito.when(hotelRepository.findByName(any()))
-        .thenReturn(hotelModel);
+    Optional<Hotel> optionalHotel = Optional.of(hotelModel);
+    Mockito.when(hotelRepository.findById(any()))
+        .thenReturn(optionalHotel);
     Mockito.when(hotelRepository.save(any()))
         .thenReturn(hotelModel);
     endpoint = new HotelEndpoint(hotelRepository);
