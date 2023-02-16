@@ -95,7 +95,7 @@
         <xs:element name="size" type="xs:int"/>
         <xs:element name="page" type="xs:int"/>
         <xs:element name="totalPages" type="xs:int"/>
-        <xs:element name="TotalElements" type="xs:int"/>
+        <xs:element name="totalElements" type="xs:int"/>
         <xs:element name="hotels" maxOccurs="unbounded" minOccurs="0" type="tns:hotel" />
       </xs:sequence>
     </xs:complexType>
@@ -107,7 +107,7 @@
         <xs:element name="size" type="xs:int"/>
         <xs:element name="page" type="xs:int"/>
         <xs:element name="totalPages" type="xs:int"/>
-        <xs:element name="TotalElements" type="xs:int"/>
+        <xs:element name="totalElements" type="xs:int"/>
         <xs:element name="hotels" maxOccurs="unbounded" minOccurs="0" type="tns:hotel" />
       </xs:sequence>
     </xs:complexType>
