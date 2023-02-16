@@ -1,7 +1,10 @@
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://spring.io/guides/gs-producing-web-service"
-  targetNamespace="http://spring.io/guides/gs-producing-web-service" elementFormDefault="qualified">
+<xs:schema
+  xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:tns="http://localhost:8081"
+  targetNamespace="http://localhost:8081"
+  elementFormDefault="qualified">
 
-  <xs:element name="getHotelsRequest">
+  <xs:element name="getHotelRequest">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="name" type="xs:string"/>
@@ -9,7 +12,41 @@
     </xs:complexType>
   </xs:element>
 
-  <xs:element name="getHotelsResponse">
+  <xs:element name="createHotelRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="name" type="xs:string"/>
+        <xs:element name="address" type="xs:string"/>
+        <xs:element name="rating" type="xs:int"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="updateHotelRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="hotel" type="tns:hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="createHotelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="hotel" type="tns:hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="updateHotelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="hotel" type="tns:hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="getHotelResponse">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="hotel" type="tns:hotel"/>
@@ -26,12 +63,4 @@
       <!-- TODO add the relatione with Amenities -->
     </xs:sequence>
   </xs:complexType>
-
-  <xs:simpleType name="currency">
-    <xs:restriction base="xs:string">
-      <xs:enumeration value="GBP"/>
-      <xs:enumeration value="EUR"/>
-      <xs:enumeration value="PLN"/>
-    </xs:restriction>
-  </xs:simpleType>
 </xs:schema>

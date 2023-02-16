@@ -1,0 +1,19 @@
+server:
+  port: 8081
+spring:
+  flyway:
+    enabled: true
+    locations: classpath:db/migration
+    url: ${DB_URL}
+    user: user
+    password: password
+  datasource:
+    url: ${DB_URL}
+    username: user
+    password: password
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5Dialect
+    generate-ddl: true
+    hibernate:
+      ddl-auto: update
