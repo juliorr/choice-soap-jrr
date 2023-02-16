@@ -22,7 +22,23 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="updateHotelRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="hotel" type="tns:hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="createHotelResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="hotel" type="tns:hotel"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="updateHotelResponse">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="hotel" type="tns:hotel"/>

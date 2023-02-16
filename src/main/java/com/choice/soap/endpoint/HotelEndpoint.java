@@ -6,6 +6,8 @@ import localhost._8081.CreateHotelRequest;
 import localhost._8081.CreateHotelResponse;
 import localhost._8081.GetHotelRequest;
 import localhost._8081.GetHotelResponse;
+import localhost._8081.UpdateHotelRequest;
+import localhost._8081.UpdateHotelResponse;
 import org.springframework.ws.server.endpoint.annotation.Endpoint;
 import org.springframework.ws.server.endpoint.annotation.PayloadRoot;
 import org.springframework.ws.server.endpoint.annotation.RequestPayload;
@@ -42,6 +44,23 @@ public class HotelEndpoint {
         request.getAddress(),
         request.getRating()
     ));
+    response.setHotel(hotelEntity.convertToDomain());
+
+    return response;
+  }
+
+  @PayloadRoot(namespace = NAMESPACE_URI, localPart = "updateHotelRequest")
+  @ResponsePayload
+  public UpdateHotelResponse updateHotel(@RequestPayload UpdateHotelRequest request) {
+    UpdateHotelResponse response = new UpdateHotelResponse();
+
+    Hotel hotel = new Hotel(
+        request.getHotel().getName(),
+        request.getHotel().getAddress(),
+        request.getHotel().getRating());
+    hotel.setId((long) request.getHotel().getId());
+
+    Hotel hotelEntity = hotelRepository.save(hotel);
     response.setHotel(hotelEntity.convertToDomain());
 
     return response;
