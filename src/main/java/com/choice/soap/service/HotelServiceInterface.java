@@ -18,4 +18,6 @@ public interface HotelServiceInterface {
   String delete(int id) throws NoSuchElementFoundException;
 
   Page<Hotel> findAll(Pageable pageable);
+
+  Page<Hotel> findByName(String name, Pageable pageable);
 }

@@ -21,6 +21,16 @@
     </xs:complexType>
   </xs:element>
 
+  <xs:element name="searchByNameRequest">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="size" type="xs:int"/>
+        <xs:element name="page" type="xs:int"/>
+        <xs:element name="name" type="xs:string"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
   <xs:element name="createHotelRequest">
     <xs:complexType>
       <xs:sequence>
@@ -80,6 +90,18 @@
   </xs:element>
 
   <xs:element name="getListResponse">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="size" type="xs:int"/>
+        <xs:element name="page" type="xs:int"/>
+        <xs:element name="totalPages" type="xs:int"/>
+        <xs:element name="TotalElements" type="xs:int"/>
+        <xs:element name="hotels" maxOccurs="unbounded" minOccurs="0" type="tns:hotel" />
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="searchByNameResponse">
     <xs:complexType>
       <xs:sequence>
         <xs:element name="size" type="xs:int"/>

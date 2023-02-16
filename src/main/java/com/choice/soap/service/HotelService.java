@@ -8,10 +8,7 @@ import localhost._8081.CreateHotelRequest;
 import localhost._8081.Hotel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,7 +24,7 @@ public class HotelService implements HotelServiceInterface {
   public Hotel getById(int id) {
     Long ID = (long) id;
     if (!this.exists(ID)) {
-      throw new NoSuchElementFoundException("Item  does not exist with id =" +  ID);
+      throw new NoSuchElementFoundException("Item  does not exist with id =" + ID);
     }
     com.choice.soap.model.Hotel hotelEntity = hotelRepository.findById(ID).get();
     return hotelEntity.convertToDomain();
@@ -43,7 +40,7 @@ public class HotelService implements HotelServiceInterface {
     if (this.exists(hotel.getId())) {
       return this.save(hotel);
     } else {
-      throw new NoSuchElementFoundException("Item  does not exist with id =" +  hotel.getId());
+      throw new NoSuchElementFoundException("Item  does not exist with id =" + hotel.getId());
     }
   }
 
@@ -63,7 +60,7 @@ public class HotelService implements HotelServiceInterface {
     if (this.exists(ID)) {
       hotelRepository.deleteById(ID);
     } else {
-      throw new NoSuchElementFoundException("Item  does not exist with id =" +  ID);
+      throw new NoSuchElementFoundException("Item  does not exist with id =" + ID);
     }
     return "Success";
   }
@@ -71,6 +68,20 @@ public class HotelService implements HotelServiceInterface {
   @Override
   public Page<Hotel> findAll(Pageable pageable) {
     Page<com.choice.soap.model.Hotel> pageHotelModel = hotelRepository.findAll(pageable);
+
+    return convertFromModelPageToDomainPage(pageHotelModel, pageable);
+  }
+
+  @Override
+  public Page<Hotel> findByName(String name, Pageable pageable) {
+    Page<com.choice.soap.model.Hotel> pageHotelModel = hotelRepository.findAllByNameContains(name,
+        pageable);
+
+    return convertFromModelPageToDomainPage(pageHotelModel, pageable);
+  }
+
+  private Page<Hotel> convertFromModelPageToDomainPage(
+      Page<com.choice.soap.model.Hotel> pageHotelModel, Pageable pageable) {
 
     List<Hotel> listHotelEntity = new java.util.ArrayList<>(Collections.emptyList());
     for (com.choice.soap.model.Hotel hotelEntityModel : pageHotelModel.getContent()) {
@@ -81,9 +92,8 @@ public class HotelService implements HotelServiceInterface {
       hotel.setRating(hotelEntityModel.getRating());
       listHotelEntity.add(hotel);
     }
-    // public PageImpl(List<T> content, Pageable pageable, long total) {
 
-    return new PageImpl<>(listHotelEntity, pageable,pageHotelModel.getTotalElements());
+    return new PageImpl<>(listHotelEntity, pageable, pageHotelModel.getTotalElements());
   }
 
   private Hotel save(com.choice.soap.model.Hotel hotelModel) {
