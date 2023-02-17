@@ -2,10 +2,12 @@ package com.choice.soap.service;
 
 import com.choice.soap.exeptions.NoSuchElementFoundException;
 import com.choice.soap.model.Amenities;
+import com.choice.soap.respository.AmenityRepository;
 import com.choice.soap.respository.HotelRepository;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 import localhost._8081.Amenity;
 import localhost._8081.CreateHotelRequest;
@@ -21,8 +23,11 @@ public class HotelService implements HotelServiceInterface {
 
   private final HotelRepository hotelRepository;
 
-  public HotelService(HotelRepository hotelRepository) {
+  private final AmenityRepository amenityRepository;
+
+  public HotelService(HotelRepository hotelRepository, AmenityRepository amenityRepository) {
     this.hotelRepository = hotelRepository;
+    this.amenityRepository = amenityRepository;
   }
 
   @Override
@@ -56,21 +61,27 @@ public class HotelService implements HotelServiceInterface {
   @Override
   @Transactional
   public Hotel create(CreateHotelRequest request) {
+    Set<Amenities> amenitiesEntity = this.amenitiesDomainToAmenitiesEntity(request.getAmenities());
     com.choice.soap.model.Hotel hotelModel = new com.choice.soap.model.Hotel(
         request.getName(),
         request.getAddress(),
         request.getRating(),
-        this.amenitiesDomainToAmenitiesEntity(request.getAmenities())
+        amenitiesEntity
     );
     return this.save(hotelModel);
   }
 
-  private Set <Amenities> amenitiesDomainToAmenitiesEntity(List<Amenity> amenitiesDomain) {
-    Set <Amenities> amenitiesEntity = new HashSet<Amenities>();
+  private Set<Amenities> amenitiesDomainToAmenitiesEntity(List<Amenity> amenitiesDomain) {
+    Set<Amenities> amenitiesEntity = new HashSet<Amenities>();
     for (Amenity amenity : amenitiesDomain) {
-      Amenities amenityEntity;
-      amenityEntity = new Amenities(amenity.getName());
-      amenityEntity.setId((long) amenity.getId());
+      Optional<Amenities> optionalAmenitiesEntity = amenityRepository.findById(
+          (long) amenity.getId());
+      if (!optionalAmenitiesEntity.isPresent()) {
+        throw new NoSuchElementFoundException("Some of the amenities does not exist");
+      }
+
+      Amenities amenityEntity = optionalAmenitiesEntity.get();
+      amenitiesEntity.add(amenityEntity);
     }
     return amenitiesEntity;
   }
@@ -131,7 +142,6 @@ public class HotelService implements HotelServiceInterface {
     return new PageImpl<>(listHotelEntity, pageable, pageHotelModel.getTotalElements());
   }
 
-  @Transactional
   private Hotel save(com.choice.soap.model.Hotel hotelModel) {
     hotelModel = hotelRepository.save(hotelModel);
     return hotelModel.convertToDomain();

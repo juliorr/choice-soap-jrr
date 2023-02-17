@@ -1,7 +1,6 @@
 package com.choice.soap.service;
 
 import com.choice.soap.exeptions.NoSuchElementFoundException;
-import java.util.List;
 import localhost._8081.CreateHotelRequest;
 import localhost._8081.Hotel;
 import org.springframework.data.domain.Page;
