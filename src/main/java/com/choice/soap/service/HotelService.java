@@ -6,6 +6,8 @@ import com.choice.soap.respository.HotelRepository;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+import localhost._8081.Amenity;
 import localhost._8081.CreateHotelRequest;
 import localhost._8081.Hotel;
 import org.springframework.data.domain.Page;
@@ -98,10 +100,21 @@ public class HotelService implements HotelServiceInterface {
     List<Hotel> listHotelEntity = new java.util.ArrayList<>(Collections.emptyList());
     for (com.choice.soap.model.Hotel hotelEntityModel : pageHotelModel.getContent()) {
       Hotel hotel = new Hotel();
+      hotelEntityModel.convertToDomain();
       hotel.setId(hotelEntityModel.getId().intValue());
       hotel.setName(hotelEntityModel.getName());
       hotel.setAddress(hotelEntityModel.getAddress());
       hotel.setRating(hotelEntityModel.getRating());
+
+      Set<Amenity> amenityDomain = new HashSet<>(Collections.emptySet());
+      for (Amenities amenityModel : hotelEntityModel.getAmenities()) {
+        Amenity amenity = new Amenity();
+        amenity.setId(amenityModel.getId().intValue());
+        amenity.setName(amenityModel.getName());
+        amenityDomain.add(amenity);
+      }
+      hotel.getAmenities().addAll(amenityDomain);
+
       listHotelEntity.add(hotel);
     }
 
