@@ -43,7 +43,7 @@ public class HotelService implements HotelServiceInterface {
         hotelEntity.getName(),
         hotelEntity.getAddress(),
         hotelEntity.getRating(),
-        new HashSet<Amenities>()
+        this.amenitiesDomainToAmenitiesEntity(hotelEntity.getAmenities())
     );
     hotel.setId((long) hotelEntity.getId());
     if (this.exists(hotel.getId())) {
@@ -60,9 +60,19 @@ public class HotelService implements HotelServiceInterface {
         request.getName(),
         request.getAddress(),
         request.getRating(),
-        new HashSet<Amenities>()
+        this.amenitiesDomainToAmenitiesEntity(request.getAmenities())
     );
     return this.save(hotelModel);
+  }
+
+  private Set <Amenities> amenitiesDomainToAmenitiesEntity(List<Amenity> amenitiesDomain) {
+    Set <Amenities> amenitiesEntity = new HashSet<Amenities>();
+    for (Amenity amenity : amenitiesDomain) {
+      Amenities amenityEntity;
+      amenityEntity = new Amenities(amenity.getName());
+      amenityEntity.setId((long) amenity.getId());
+    }
+    return amenitiesEntity;
   }
 
   @Override
