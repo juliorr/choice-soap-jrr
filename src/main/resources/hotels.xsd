@@ -119,7 +119,13 @@
       <xs:element name="name" type="xs:string"/>
       <xs:element name="address" type="xs:string"/>
       <xs:element name="rating" type="xs:int"/>
-      <!-- TODO add the relatione with Amenities -->
+      <xs:element name="amenities" maxOccurs="unbounded" minOccurs="0" type="tns:amenity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="amenity">
+    <xs:sequence>
+      <xs:element name="id" type="xs:int"/>
+      <xs:element name="name" type="xs:string"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

@@ -1,8 +1,10 @@
 package com.choice.soap.service;
 
 import com.choice.soap.exeptions.NoSuchElementFoundException;
+import com.choice.soap.model.Amenities;
 import com.choice.soap.respository.HotelRepository;
 import java.util.Collections;
+import java.util.HashSet;
 import java.util.List;
 import localhost._8081.CreateHotelRequest;
 import localhost._8081.Hotel;
@@ -10,6 +12,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class HotelService implements HotelServiceInterface {
@@ -21,6 +24,7 @@ public class HotelService implements HotelServiceInterface {
   }
 
   @Override
+  @Transactional
   public Hotel getById(int id) {
     Long ID = (long) id;
     if (!this.exists(ID)) {
@@ -31,11 +35,14 @@ public class HotelService implements HotelServiceInterface {
   }
 
   @Override
+  @Transactional
   public Hotel update(Hotel hotelEntity) throws NoSuchElementFoundException {
     com.choice.soap.model.Hotel hotel = new com.choice.soap.model.Hotel(
         hotelEntity.getName(),
         hotelEntity.getAddress(),
-        hotelEntity.getRating());
+        hotelEntity.getRating(),
+        new HashSet<Amenities>()
+    );
     hotel.setId((long) hotelEntity.getId());
     if (this.exists(hotel.getId())) {
       return this.save(hotel);
@@ -45,16 +52,19 @@ public class HotelService implements HotelServiceInterface {
   }
 
   @Override
+  @Transactional
   public Hotel create(CreateHotelRequest request) {
     com.choice.soap.model.Hotel hotelModel = new com.choice.soap.model.Hotel(
         request.getName(),
         request.getAddress(),
-        request.getRating()
+        request.getRating(),
+        new HashSet<Amenities>()
     );
     return this.save(hotelModel);
   }
 
   @Override
+  @Transactional
   public String delete(int id) {
     Long ID = (long) id;
     if (this.exists(ID)) {
@@ -66,6 +76,7 @@ public class HotelService implements HotelServiceInterface {
   }
 
   @Override
+  @Transactional
   public Page<Hotel> findAll(Pageable pageable) {
     Page<com.choice.soap.model.Hotel> pageHotelModel = hotelRepository.findAll(pageable);
 
@@ -73,6 +84,7 @@ public class HotelService implements HotelServiceInterface {
   }
 
   @Override
+  @Transactional
   public Page<Hotel> findByName(String name, Pageable pageable) {
     Page<com.choice.soap.model.Hotel> pageHotelModel = hotelRepository.findAllByNameContains(name,
         pageable);
@@ -96,6 +108,7 @@ public class HotelService implements HotelServiceInterface {
     return new PageImpl<>(listHotelEntity, pageable, pageHotelModel.getTotalElements());
   }
 
+  @Transactional
   private Hotel save(com.choice.soap.model.Hotel hotelModel) {
     hotelModel = hotelRepository.save(hotelModel);
     return hotelModel.convertToDomain();
