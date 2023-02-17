@@ -7,7 +7,7 @@
   <xs:element name="getHotelRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="id" type="xs:int"/>
+        <xs:element ref="tns:id" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -15,8 +15,8 @@
   <xs:element name="getListRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="size" type="xs:int"/>
-        <xs:element name="page" type="xs:int"/>
+        <xs:element ref="tns:size" />
+        <xs:element ref="tns:page" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -24,9 +24,9 @@
   <xs:element name="searchByNameRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="size" type="xs:int"/>
-        <xs:element name="page" type="xs:int"/>
-        <xs:element name="name" type="xs:string"/>
+        <xs:element ref="tns:size" />
+        <xs:element ref="tns:page" />
+        <xs:element ref="tns:name" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -34,9 +34,9 @@
   <xs:element name="createHotelRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="name" type="xs:string"/>
-        <xs:element name="address" type="xs:string"/>
-        <xs:element name="rating" type="xs:int"/>
+        <xs:element ref="tns:name" />
+        <xs:element ref="tns:address" />
+        <xs:element ref="tns:rating" />
         <xs:element name="amenities" maxOccurs="unbounded" minOccurs="0" type="tns:amenity" />
       </xs:sequence>
     </xs:complexType>
@@ -53,7 +53,7 @@
   <xs:element name="deleteHotelRequest">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="id" type="xs:int"/>
+        <xs:element ref="tns:id" />
       </xs:sequence>
     </xs:complexType>
   </xs:element>
@@ -93,10 +93,10 @@
   <xs:element name="getListResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="size" type="xs:int"/>
-        <xs:element name="page" type="xs:int"/>
-        <xs:element name="totalPages" type="xs:int"/>
-        <xs:element name="totalElements" type="xs:int"/>
+        <xs:element ref="tns:size" />
+        <xs:element ref="tns:page" />
+        <xs:element ref="tns:totalPages" />
+        <xs:element ref="tns:totalElements" />
         <xs:element name="hotels" maxOccurs="unbounded" minOccurs="0" type="tns:hotel" />
       </xs:sequence>
     </xs:complexType>
@@ -105,10 +105,10 @@
   <xs:element name="searchByNameResponse">
     <xs:complexType>
       <xs:sequence>
-        <xs:element name="size" type="xs:int"/>
-        <xs:element name="page" type="xs:int"/>
-        <xs:element name="totalPages" type="xs:int"/>
-        <xs:element name="totalElements" type="xs:int"/>
+        <xs:element ref="tns:size" />
+        <xs:element ref="tns:page" />
+        <xs:element ref="tns:totalPages" />
+        <xs:element ref="tns:totalElements" />
         <xs:element name="hotels" maxOccurs="unbounded" minOccurs="0" type="tns:hotel" />
       </xs:sequence>
     </xs:complexType>
@@ -116,17 +116,25 @@
 
   <xs:complexType name="hotel">
     <xs:sequence>
-      <xs:element name="id" type="xs:int"/>
-      <xs:element name="name" type="xs:string"/>
-      <xs:element name="address" type="xs:string"/>
-      <xs:element name="rating" type="xs:int"/>
+      <xs:element ref="tns:id" />
+      <xs:element ref="tns:name" />
+      <xs:element ref="tns:address" />
+      <xs:element ref="tns:rating" />
       <xs:element name="amenities" maxOccurs="unbounded" minOccurs="0" type="tns:amenity" />
     </xs:sequence>
   </xs:complexType>
   <xs:complexType name="amenity">
     <xs:sequence>
-      <xs:element name="id" type="xs:int"/>
-      <xs:element name="name" type="xs:string"/>
+      <xs:element ref="tns:id" />
+      <xs:element ref="tns:name"/>
     </xs:sequence>
   </xs:complexType>
+  <xs:element name="id" type="xs:int"/>
+  <xs:element name="name" type="xs:string"/>
+  <xs:element name="address" type="xs:string"/>
+  <xs:element name="rating" type="xs:int"/>
+  <xs:element name="size" type="xs:int"/>
+  <xs:element name="page" type="xs:int"/>
+  <xs:element name="totalPages" type="xs:int"/>
+  <xs:element name="totalElements" type="xs:int"/>
 </xs:schema>
