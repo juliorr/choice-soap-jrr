@@ -43,14 +43,14 @@ public class HotelService implements HotelServiceInterface {
 
   @Override
   @Transactional
-  public Hotel update(Hotel hotelEntity) throws NoSuchElementFoundException {
+  public Hotel update(Hotel hotelDomain) throws NoSuchElementFoundException {
     com.choice.soap.model.Hotel hotel = new com.choice.soap.model.Hotel(
-        hotelEntity.getName(),
-        hotelEntity.getAddress(),
-        hotelEntity.getRating(),
-        this.amenitiesDomainToAmenitiesEntity(hotelEntity.getAmenities())
+        hotelDomain.getName(),
+        hotelDomain.getAddress(),
+        hotelDomain.getRating(),
+        this.amenitiesDomainToAmenitiesEntity(hotelDomain.getAmenities())
     );
-    hotel.setId((long) hotelEntity.getId());
+    hotel.setId((long) hotelDomain.getId());
     if (this.exists(hotel.getId())) {
       return this.save(hotel);
     } else {

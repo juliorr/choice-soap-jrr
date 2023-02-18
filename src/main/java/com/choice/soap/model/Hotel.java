@@ -25,7 +25,7 @@ public class Hotel {
   private String address = "";
   private Integer rating = 0;
   @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE}, fetch = FetchType.EAGER)
-  private Set<Amenities> amenities;
+  private Set<Amenities> amenities = new HashSet<Amenities>();
 
 
   protected Hotel() {
