@@ -49,7 +49,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:getHotelRequest>\n            <gs:id>1</gs:id>\n        </gs:getHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:getHotelRequest>\n            <gs:id>30</gs:id>\n        </gs:getHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
 					"options": {
 						"raw": {
 							"language": "xml"
@@ -170,7 +170,63 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:createHotelRequest>\n            <gs:name>First Add</gs:name>\n            <gs:address>Patzuacro 6</gs:address>\n            <gs:rating>2</gs:rating>\n        </gs:createHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:createHotelRequest>\n            <gs:name>First Add</gs:name>\n            <gs:address>Patzuacro 6</gs:address>\n            <gs:rating>2</gs:rating>\n            <gs:amenities>\n                <gs:id>1</gs:id>\n            </gs:amenities>\n            <gs:amenities>\n                <gs:id>2</gs:id>\n            </gs:amenities>\n        </gs:createHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/ws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Hotel Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xmlTree = xml2Json(responseBody);",
+							"var hotel = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"SOAP-ENV:Fault\"];",
+							"console.log(hotel);",
+							"",
+							"pm.test(\"Status code is 500\", () => {",
+							"    pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"#POST\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:createHotelRequest>\n            <gs:name>First Add</gs:name>\n            <gs:address>Patzuacro 6</gs:address>\n            <gs:rating>2</gs:rating>\n            <gs:amenities>\n                <gs:id>9999999</gs:id>\n            </gs:amenities>\n        </gs:createHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
 					"options": {
 						"raw": {
 							"language": "xml"
@@ -234,7 +290,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:updateHotelRequest>\n            <gs:hotel>\n                <gs:id>4</gs:id>\n                <gs:name>First Add modify 2</gs:name>\n                <gs:address>Patzuacro 6</gs:address>\n                <gs:rating>2</gs:rating>\n            </gs:hotel>\n        </gs:updateHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:updateHotelRequest>\n            <gs:hotel>\n                <gs:id>2</gs:id>\n                <gs:name>First Add modify 2</gs:name>\n                <gs:address>Patzuacro 6</gs:address>\n                <gs:rating>2</gs:rating>\n                <gs:amenities>\n                    <gs:id>2</gs:id>\n            </gs:amenities>\n            </gs:hotel>\n        </gs:updateHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
 					"options": {
 						"raw": {
 							"language": "xml"
@@ -353,7 +409,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:deleteHotelRequest>\n            <gs:id>10</gs:id>\n        </gs:deleteHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:deleteHotelRequest>\n            <gs:id>29</gs:id>\n        </gs:deleteHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
 					"options": {
 						"raw": {
 							"language": "xml"
@@ -480,7 +536,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:getListRequest>\n            <gs:size>2</gs:size>\n            <gs:page>0</gs:page>\n        </gs:getListRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:getListRequest>\n            <gs:size>40</gs:size>\n            <gs:page>0</gs:page>\n        </gs:getListRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
 					"options": {
 						"raw": {
 							"language": "xml"
