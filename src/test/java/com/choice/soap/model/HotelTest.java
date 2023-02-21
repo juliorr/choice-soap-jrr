@@ -20,7 +20,7 @@ class HotelTest {
   @ParameterizedTest
   @MethodSource("providerConvertToDomain")
   void testConvertToDomain(Hotel hotel) {
-    localhost._8081.Hotel hotelDomain = hotel.convertToDomain();
+    com.choice.soap.gen.Hotel hotelDomain = hotel.convertToDomain();
     assertEquals(hotel.getId(), hotelDomain.getId());
     assertEquals(hotel.getAddress(), hotelDomain.getAddress());
     assertEquals(hotel.getName(), hotelDomain.getName());

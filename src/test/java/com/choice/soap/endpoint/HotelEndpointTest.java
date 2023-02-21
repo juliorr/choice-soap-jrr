@@ -12,18 +12,18 @@ import com.choice.soap.service.HotelServiceInterface;
 import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
-import localhost._8081.CreateHotelRequest;
-import localhost._8081.CreateHotelResponse;
-import localhost._8081.DeleteHotelRequest;
-import localhost._8081.DeleteHotelResponse;
-import localhost._8081.GetHotelRequest;
-import localhost._8081.GetHotelResponse;
-import localhost._8081.GetListRequest;
-import localhost._8081.GetListResponse;
-import localhost._8081.SearchByNameRequest;
-import localhost._8081.SearchByNameResponse;
-import localhost._8081.UpdateHotelRequest;
-import localhost._8081.UpdateHotelResponse;
+import com.choice.soap.gen.CreateHotelRequest;
+import com.choice.soap.gen.CreateHotelResponse;
+import com.choice.soap.gen.DeleteHotelRequest;
+import com.choice.soap.gen.DeleteHotelResponse;
+import com.choice.soap.gen.GetHotelRequest;
+import com.choice.soap.gen.GetHotelResponse;
+import com.choice.soap.gen.GetListRequest;
+import com.choice.soap.gen.GetListResponse;
+import com.choice.soap.gen.SearchByNameRequest;
+import com.choice.soap.gen.SearchByNameResponse;
+import com.choice.soap.gen.UpdateHotelRequest;
+import com.choice.soap.gen.UpdateHotelResponse;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,7 +52,7 @@ class HotelEndpointTest {
   private SearchByNameResponse searchByNameResponse;
   private Hotel hotelModel;
   Pageable pageable;
-  Page<localhost._8081.Hotel> hotelPage;
+  Page<com.choice.soap.gen.Hotel> hotelPage;
 
   @BeforeEach
   void setUp() {
@@ -75,15 +75,15 @@ class HotelEndpointTest {
     hotelServiceInterface = mock(HotelServiceInterface.class);
     pageable = mock(Pageable.class);
 
-    List<localhost._8081.Hotel> listHotelEntity = new java.util.ArrayList<>(Collections.emptyList());
+    List<com.choice.soap.gen.Hotel> listHotelEntity = new java.util.ArrayList<>(Collections.emptyList());
     hotelPage = new PageImpl<>(listHotelEntity, pageable, 1);
 
 
     hotelModel = new Hotel("some name", "some address", 1, new HashSet<Amenities>());
-    localhost._8081.Hotel hotelDomain = new localhost._8081.Hotel();
+    com.choice.soap.gen.Hotel hotelDomain = new com.choice.soap.gen.Hotel();
     Mockito.when(hotelServiceInterface.getById(anyInt()))
         .thenReturn(hotelDomain);
-    Mockito.when(hotelServiceInterface.update(any(localhost._8081.Hotel.class)))
+    Mockito.when(hotelServiceInterface.update(any(com.choice.soap.gen.Hotel.class)))
         .thenReturn(hotelDomain);
     Mockito.when(hotelServiceInterface.create(any(CreateHotelRequest.class)))
         .thenReturn(hotelDomain);
@@ -114,20 +114,20 @@ class HotelEndpointTest {
   @Test
   void getHotel() {
     getHotelResponse = endpoint.getHotel(getHotelRequest);
-    assertInstanceOf(localhost._8081.Hotel.class, getHotelResponse.getHotel());
+    assertInstanceOf(com.choice.soap.gen.Hotel.class, getHotelResponse.getHotel());
   }
 
   @Test
   void updateHotel() {
-    updateHotelRequest.setHotel(new localhost._8081.Hotel());
+    updateHotelRequest.setHotel(new com.choice.soap.gen.Hotel());
     updateHotelResponse = endpoint.updateHotel(updateHotelRequest);
-    assertInstanceOf(localhost._8081.Hotel.class, updateHotelResponse.getHotel());
+    assertInstanceOf(com.choice.soap.gen.Hotel.class, updateHotelResponse.getHotel());
   }
 
   @Test
   void createHotel() {
     createHotelResponse = endpoint.addHotel(createHotelRequest);
-    assertInstanceOf(localhost._8081.Hotel.class, createHotelResponse.getHotel());
+    assertInstanceOf(com.choice.soap.gen.Hotel.class, createHotelResponse.getHotel());
   }
 
   @Test

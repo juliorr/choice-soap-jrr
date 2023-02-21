@@ -11,7 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
-import localhost._8081.Amenity;
+import com.choice.soap.gen.Amenity;
 
 @Entity
 public class Hotel {
@@ -73,8 +73,8 @@ public class Hotel {
     this.amenities = amenities;
   }
 
-  public localhost._8081.Hotel convertToDomain() {
-    localhost._8081.Hotel hotelDomain = new localhost._8081.Hotel();
+  public com.choice.soap.gen.Hotel convertToDomain() {
+    com.choice.soap.gen.Hotel hotelDomain = new com.choice.soap.gen.Hotel();
     hotelDomain.setId(this.getId().intValue());
     hotelDomain.setAddress(this.getAddress());
     hotelDomain.setName(this.getName());

@@ -17,8 +17,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
 import java.util.Set;
-import localhost._8081.Amenity;
-import localhost._8081.CreateHotelRequest;
+import com.choice.soap.gen.Amenity;
+import com.choice.soap.gen.CreateHotelRequest;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -64,7 +64,7 @@ class HotelServiceTest {
   void getById() {
     Mockito.when(hotelRepository.existsById(anyLong())).thenReturn(true);
     Mockito.when(hotelRepository.findById(anyLong())).thenReturn(Optional.ofNullable(hotelModel));
-    localhost._8081.Hotel response = hotelService.getById(1);
+    com.choice.soap.gen.Hotel response = hotelService.getById(1);
     assertEquals(hotelModel.getName(), response.getName());
   }
 
@@ -73,7 +73,7 @@ class HotelServiceTest {
     Mockito.when(hotelRepository.existsById(anyLong())).thenReturn(false);
     NoSuchElementFoundException thrown = Assertions.assertThrows(NoSuchElementFoundException.class,
         () -> {
-          localhost._8081.Hotel hotelDomain = new localhost._8081.Hotel();
+          com.choice.soap.gen.Hotel hotelDomain = new com.choice.soap.gen.Hotel();
           hotelService.update(hotelDomain);
         });
   }
@@ -89,7 +89,7 @@ class HotelServiceTest {
 
     NoSuchElementFoundException thrown = Assertions.assertThrows(NoSuchElementFoundException.class,
         () -> {
-          localhost._8081.Hotel hotelDomain = new localhost._8081.Hotel();
+          com.choice.soap.gen.Hotel hotelDomain = new com.choice.soap.gen.Hotel();
           hotelDomain.getAmenities().addAll(amenityList);
           hotelService.update(hotelDomain);
         });
@@ -105,9 +105,9 @@ class HotelServiceTest {
     Mockito.when(amenityRepository.findById(anyLong())).thenReturn(optionalAmenities);
     Mockito.when(hotelRepository.save(any(Hotel.class))).thenReturn(hotelModel);
 
-    localhost._8081.Hotel hotelDomain = new localhost._8081.Hotel();
+    com.choice.soap.gen.Hotel hotelDomain = new com.choice.soap.gen.Hotel();
     hotelDomain.getAmenities().addAll(amenityList);
-    localhost._8081.Hotel response = hotelService.update(hotelDomain);
+    com.choice.soap.gen.Hotel response = hotelService.update(hotelDomain);
     assertEquals("some_name", response.getName());
 
   }
@@ -116,7 +116,7 @@ class HotelServiceTest {
   void create() {
     CreateHotelRequest createHotelRequest = new CreateHotelRequest();
     Mockito.when(hotelRepository.save(any(Hotel.class))).thenReturn(hotelModel);
-    localhost._8081.Hotel reponse = hotelService.create(createHotelRequest);
+    com.choice.soap.gen.Hotel reponse = hotelService.create(createHotelRequest);
     assertEquals("some_name", reponse.getName());
   }
 
@@ -145,7 +145,7 @@ class HotelServiceTest {
         pageable,
         1);
     Mockito.when(hotelRepository.findAll(any(Pageable.class))).thenReturn(pageHotelDomain);
-    Page<localhost._8081.Hotel> response = hotelService.findAll(pageable);
+    Page<com.choice.soap.gen.Hotel> response = hotelService.findAll(pageable);
     assertEquals(1, response.getTotalElements());
   }
 
@@ -164,7 +164,7 @@ class HotelServiceTest {
           anyString(), any(Pageable.class)
         ))
         .thenReturn(pageHotelDomain);
-    Page<localhost._8081.Hotel> response = hotelService.findByName("some_search", pageable);
+    Page<com.choice.soap.gen.Hotel> response = hotelService.findByName("some_search", pageable);
     assertEquals(1, response.getTotalElements());
   }
 }
