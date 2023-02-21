@@ -58,3 +58,4 @@ build/
 
 ### Maven ####
 .mvn/
+src/main/java/com/choice/soap/gen/
