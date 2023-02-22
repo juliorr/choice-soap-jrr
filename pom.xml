@@ -101,6 +101,7 @@
         <configuration>
           <schemaDirectory>${project.basedir}/src/main/resources/</schemaDirectory>
           <outputDirectory>${project.basedir}/src/main/java</outputDirectory>
+          <packageName>com.choice.soap.gen</packageName>
           <clearOutputDir>false</clearOutputDir>
         </configuration>
       </plugin>

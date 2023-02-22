@@ -49,7 +49,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:getHotelRequest>\n            <gs:name>Fiesta</gs:name>\n        </gs:getHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:getHotelRequest>\n            <gs:id>30</gs:id>\n        </gs:getHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
 					"options": {
 						"raw": {
 							"language": "xml"
@@ -106,7 +106,636 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:getHotelRequest>\n            <gs:name>This hotel does not exists</gs:name>\n        </gs:getHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:getHotelRequest>\n            <gs:id>99999999</gs:id>\n        </gs:getHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/ws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Hotel Sucess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xmlTree = xml2Json(responseBody);",
+							"var hotel = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"ns2:createHotelResponse\"][\"ns2:hotel\"];",
+							"console.log(hotel);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the HotelData\", function () { ",
+							"    pm.expect(hotel[\"ns2:id\"]).not.be.empty;",
+							"    pm.expect(hotel[\"ns2:name\"]).not.be.empty;",
+							"    pm.expect(hotel[\"ns2:address\"]).not.be.empty;",
+							"    pm.expect(hotel[\"ns2:address\"]).not.be.empty;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"#POST\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:createHotelRequest>\n            <gs:name>First Add</gs:name>\n            <gs:address>Patzuacro 6</gs:address>\n            <gs:rating>2</gs:rating>\n            <gs:amenities>\n                <gs:id>1</gs:id>\n            </gs:amenities>\n            <gs:amenities>\n                <gs:id>2</gs:id>\n            </gs:amenities>\n        </gs:createHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/ws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Hotel Error",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xmlTree = xml2Json(responseBody);",
+							"var hotel = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"SOAP-ENV:Fault\"];",
+							"console.log(hotel);",
+							"",
+							"pm.test(\"Status code is 500\", () => {",
+							"    pm.response.to.have.status(500);",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"#POST\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:createHotelRequest>\n            <gs:name>First Add</gs:name>\n            <gs:address>Patzuacro 6</gs:address>\n            <gs:rating>2</gs:rating>\n            <gs:amenities>\n                <gs:id>9999999</gs:id>\n            </gs:amenities>\n        </gs:createHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/ws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Hotel Sucess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xmlTree = xml2Json(responseBody);",
+							"var hotel = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"ns2:updateHotelResponse\"][\"ns2:hotel\"];",
+							"console.log(hotel);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the HotelData\", function () { ",
+							"    pm.expect(hotel[\"ns2:id\"]).not.be.empty;",
+							"    pm.expect(hotel[\"ns2:name\"]).not.be.empty;",
+							"    pm.expect(hotel[\"ns2:address\"]).not.be.empty;",
+							"    pm.expect(hotel[\"ns2:address\"]).not.be.empty;",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"#POST\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:updateHotelRequest>\n            <gs:hotel>\n                <gs:id>2</gs:id>\n                <gs:name>First Add modify 2</gs:name>\n                <gs:address>Patzuacro 6</gs:address>\n                <gs:rating>2</gs:rating>\n                <gs:amenities>\n                    <gs:id>2</gs:id>\n            </gs:amenities>\n            </gs:hotel>\n        </gs:updateHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/ws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Hotel  When Hotel not exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xmlTree = xml2Json(responseBody);",
+							"var error = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"SOAP-ENV:Fault\"];",
+							"",
+							"",
+							"pm.test(\"Status code is 500\", () => {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"#POST\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:updateHotelRequest>\n            <gs:hotel>\n                <gs:id>999999999</gs:id>\n                <gs:name>First Add modify 2</gs:name>\n                <gs:address>Patzuacro 6</gs:address>\n                <gs:rating>2</gs:rating>\n            </gs:hotel>\n        </gs:updateHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/ws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Hotel Sucess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xmlTree = xml2Json(responseBody);",
+							"var message = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"ns2:deleteHotelResponse\"][\"ns2:message\"];",
+							"console.log(message);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the response\", function () { ",
+							"    pm.expect(message).to.equal(\"Success\");",
+							"     ",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"#POST\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:deleteHotelRequest>\n            <gs:id>29</gs:id>\n        </gs:deleteHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/ws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Hotel not exist",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xmlTree = xml2Json(responseBody);",
+							"var error = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"SOAP-ENV:Fault\"];",
+							"",
+							"",
+							"pm.test(\"Status code is 500\", () => {",
+							"    pm.response.to.have.status(500);",
+							"});",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"#POST\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:deleteHotelRequest>\n            <gs:id>99999999</gs:id>\n        </gs:deleteHotelRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/ws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get List Hotel Sucess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xmlTree = xml2Json(responseBody);",
+							"var response = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"ns2:getListResponse\"];",
+							"console.log(response);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the Pagination\", function () {",
+							"    pm.expect(response[\"ns2:size\"]).not.be.empty",
+							"    pm.expect(response[\"ns2:page\"]).not.be.empty;",
+							"    pm.expect(response[\"ns2:totalPages\"]).not.be.empty;",
+							"    pm.expect(response[\"ns2:totalElements\"]).not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Verify the Hotels\", function () {",
+							"    var hotels = response[\"ns2:hotels\"];",
+							"    pm.expect(hotels).not.be.empty",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"#POST\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:getListRequest>\n            <gs:size>40</gs:size>\n            <gs:page>0</gs:page>\n        </gs:getListRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/ws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get List Hotel Not found",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xmlTree = xml2Json(responseBody);",
+							"var response = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"ns2:getListResponse\"];",
+							"console.log(response);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the Pagination\", function () {",
+							"    pm.expect(response[\"ns2:size\"]).not.be.empty",
+							"    pm.expect(response[\"ns2:page\"]).not.be.empty;",
+							"    pm.expect(response[\"ns2:totalPages\"]).not.be.empty;",
+							"    pm.expect(response[\"ns2:totalElements\"]).not.be.empty;",
+							"});"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"#POST\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:getListRequest>\n            <gs:size>99999</gs:size>\n            <gs:page>9999</gs:page>\n        </gs:getListRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/ws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find by Name Hotel Sucess",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xmlTree = xml2Json(responseBody);",
+							"var response = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"ns2:searchByNameResponse\"];",
+							"console.log(response);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the Pagination\", function () {",
+							"    pm.expect(response[\"ns2:size\"]).not.be.empty",
+							"    pm.expect(response[\"ns2:page\"]).not.be.empty;",
+							"    pm.expect(response[\"ns2:totalPages\"]).not.be.empty;",
+							"    pm.expect(response[\"ns2:totalElements\"]).not.be.empty;",
+							"});",
+							"",
+							"pm.test(\"Verify the Hotels\", function () {",
+							"    var hotels = response[\"ns2:hotels\"];",
+							"    pm.expect(hotels).not.be.empty",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"#POST\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:searchByNameRequest>\n            <gs:size>10</gs:size>\n            <gs:page>0</gs:page>\n            <gs:name>First</gs:name>\n        </gs:searchByNameRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
+					"options": {
+						"raw": {
+							"language": "xml"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8081/ws",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8081",
+					"path": [
+						"ws"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Find by Name Hotel Not fond",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var xmlTree = xml2Json(responseBody);",
+							"var response = xmlTree[\"SOAP-ENV:Envelope\"][\"SOAP-ENV:Body\"][\"ns2:searchByNameResponse\"];",
+							"console.log(response);",
+							"",
+							"pm.test(\"Status code is 200\", () => {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Verify the Pagination\", function () {",
+							"    pm.expect(response[\"ns2:size\"]).not.be.empty",
+							"    pm.expect(response[\"ns2:page\"]).not.be.empty;",
+							"    pm.expect(response[\"ns2:totalPages\"]).to.equal(\"0\");",
+							"    pm.expect(response[\"ns2:totalElements\"]).to.equal(\"0\");",
+							"});",
+							"",
+							"",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "text/xml",
+						"type": "text"
+					},
+					{
+						"key": "SOAPAction",
+						"value": "\"#POST\"",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "<soapenv:Envelope xmlns:soapenv=\"http://schemas.xmlsoap.org/soap/envelope/\"\n                  xmlns:gs=\"http://localhost:8081\">\n    <soapenv:Header/>\n    <soapenv:Body>\n        <gs:searchByNameRequest>\n            <gs:size>2</gs:size>\n            <gs:page>0</gs:page>\n            <gs:name>XXXXXXXXXXXXXXXVVVVBBB</gs:name>\n        </gs:searchByNameRequest>\n    </soapenv:Body>\n</soapenv:Envelope>",
 					"options": {
 						"raw": {
 							"language": "xml"
